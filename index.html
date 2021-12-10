@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+  
+  <title>Frontend Mentor | Time tracking dashboard</title>
+
+  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
+  <style>
+  @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300&display=swap');
+  *{
+    font-family: 'Rubik', sans-serif;
+    font-size: 14px;
+    color: white;
+    box-sizing: border-box;
+  }
+  body{
+    background-color:hsl(226, 43%, 10%);
+  }
+  .grid-container{
+    display: grid;
+    grid-template-columns: 200px 200px 200px 200px;
+    grid-template-rows: 200px 200px;
+    gap: 20px;
+  }
+
+  .menu{
+    grid-row: 1 / span 2;
+  }
+  .menu-up{
+    display: flex;
+    flex-direction: column;
+    height: 70%;
+    background-color: hsl(246, 80%, 60%);
+    border-radius: 20px 20px 0 0;
+  }
+  .avatar-name{
+    margin-left: 10%;
+    font-size: 28px;
+  }
+  .menu-down{
+    display: flex;
+    flex-direction: column;
+    height: 30%;
+    background-color: hsl(235, 46%, 20%);
+    border-radius: 0 0 20px 20px;
+  }
+  .spanner{
+    color: hsl(236, 100%, 87%);
+    margin-left: 10%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  .spanner:hover{
+    color: white;
+  }
+
+  .el-1, .el-2, .el-3, .el-4, .el-5, .el-6{
+    display: flex;
+    flex-direction: column;
+  }
+
+  .up{
+    display: flex;
+    justify-content: end;
+    height:20%;
+    background-color: tomato;
+    border-radius: 20px 20px 0 0;
+    z-index: -1;
+  }
+  .u-1{background-color:hsl(15, 100%, 70%) ;}
+  .u-2{background-color:  hsl(195, 74%, 62%);}
+  .u-3{background-color: hsl(348, 100%, 68%);}
+  .u-4{background-color:hsl(145, 58%, 55%) ;}
+  .u-5{background-color: hsl(264, 64%, 52%);}
+  .u-6{background-color: hsl(43, 84%, 65%);}
+  
+  .down{
+    display: flex;
+    flex-direction: column;
+    height: 80%;
+    background-color: hsl(235, 46%, 20%);
+    border-radius: 0 0 20px 20px;
+    z-index: 10;
+  }
+  .title{
+    display:flex;
+    justify-content: space-between;
+    margin: 10%;
+  }
+  .hours{
+    margin: 0 0 0 10%;
+    font-size: 32px;
+  }
+  .lastweek{
+    font-size: 10px;
+    margin: 5% 10% 10% 10%;
+    color:hsl(236, 100%, 87%)
+  }
+  img{
+    min-height: 60px; z-index: 0; margin: 5px 5px 0 0;
+  }
+
+  @media screen and (max-width:860px) {
+    .grid-container{
+      grid-template-columns: auto;
+    }
+  }
+  </style>
+</head>
+<body>
+<div id="app-1">
+  <div class = "grid-container">
+    <div class = "menu">
+      <div class="menu-up">
+        <img style="margin: 10%; width: 70px; height: 70px; border-radius: 25%;" src="images/image-jeremy.png">  
+        <div class = "avatar-name"><span style="font-size: 10px;">Report for</span><br>Jeremy Robson</div>
+        </div>
+      <div class="menu-down">
+        <a v-on:click="dailyValues" class="spanner">Daily</a>
+        <a v-on:click="weeklyValues" class="spanner">Weekly </a>
+        <a v-on:click="monthlyValues" class="spanner">Monthly </a>
+      </div>
+      
+    </div>
+    <div class ="el-1">
+      <div class = "up u-1"> <img src="images/icon-work.svg"> </div>  
+      <div class="down">
+        <div class="title">
+          <span> Work</span>
+          <span>°°°</span>
+        </div>  
+        <div id="work-hours" class="hours">
+         {{work_hours}}hrs
+        </div>
+        <div id="last-work-hours" class="lastweek">
+          Last week - {{last_work_hours}} hrs
+        </div>
+      </div>
+    </div>
+    <div class ="el-2">
+      <div class = "up u-2"><img src="images/icon-play.svg"></div>  
+      <div class="down">
+        <div class="title">
+          <span> Play</span>
+          <span>°°°</span>
+        </div>  
+        <div id="play-hours" class="hours">
+          {{play_hours}}hrs
+        </div>
+        <div id ="last-play-hours" class="lastweek">
+          Last week - {{last_play_hours}}hrs
+        </div>
+      </div>
+    </div>
+    <div class ="el-3">
+      <div class = "up u-3"><img src="images/icon-study.svg"></div>  
+      <div class="down">
+        <div class="title">
+          <span> Study</span>
+          <span>°°°</span>
+        </div>  
+        <div id="study-hours" class="hours">
+          {{study_hours}}hrs
+        </div>
+        <div id ="last-study-hours" class="lastweek">
+          Last week - {{last_study_hours}}hrs
+        </div>
+      </div>
+    </div>
+    <div class ="el-4">
+      <div class = "up u-4"><img src="images/icon-exercise.svg"></div>  
+      <div class="down">
+        <div class="title">
+          <span> Exercise</span>
+          <span>°°°</span>
+        </div>  
+        <div id="exercise-hours" class="hours">
+          {{exercise_hours}}hrs
+        </div>
+        <div id = "last-exercise-hours"class="lastweek">
+          Last week - {{last_exercise_hours}}hrs
+        </div>
+      </div>
+    </div>
+    <div class ="el-5">
+      <div class = "up u-5"><img src="images/icon-social.svg"></div>  
+      <div class="down">
+        <div class="title">
+          <span> Social</span>
+          <span>°°°</span>
+        </div>  
+        <div id ="social-hours" class="hours">
+          {{social_hours}}hrs
+        </div>
+        <div id= "last-social-hours" class="lastweek">
+          Last week - {{last_social_hours}}hrs
+        </div>
+      </div>
+    </div>
+    <div class ="el-6">
+      <div class = "up u-6"><img src="images/icon-self-care.svg"></div>  
+      <div class="down">
+        <div class="title">
+          <span> Self Care</span>
+          <span>°°°</span>
+        </div>  
+        <div id="self-hours" class="hours">
+          {{self_hours}}hrs
+        </div>
+        <div id="last-self-hours" class="lastweek">
+          Last week - {{last_self_hours}}hrs
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--VUE development version, includes helpful console warnings -->
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script src="index.js"></script>
+<script type="text/javascript" src="dataSet.js"></script>
+</body>
+</html>
